@@ -1,1 +1,2 @@
-Hola , mensaje editado desde rama main
+Hola , mensaje editado en ambas ramas
+
