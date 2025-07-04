@@ -1,45 +1,39 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:18' // Imagen oficial de Node.js con npm
+    agent any
+    
+    tools {
+        nodejs 'NodeJS' // Configurar en Jenkins Global Tool Configuration
     }
-  }
-
-  environment {
-    CI = 'true'
-  }
-
-  stages {
-    stage('Clonar repositorio') {
-      steps {
-        echo 'Repositorio clonado automáticamente por Jenkins desde Git'
-      }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Diego11491/proyecto-inventario-react-.git'
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'npm test -- --coverage --watchAll=false'
+            }
+        }
     }
-
-    stage('Instalar dependencias') {
-      steps {
-        sh 'npm install'
-      }
+    
+    post {
+        always {
+            cleanWs()
+        }
     }
-
-    stage('Ejecutar tests') {
-      steps {
-        // Solo si tienes tests. Puedes comentar esta línea si no
-        sh 'npm run test'
-      }
-    }
-
-    stage('Build de la app') {
-      steps {
-        sh 'npm run build'
-      }
-    }
-
-    stage('Post-Build') {
-      steps {
-        echo '✅ Build finalizado correctamente. Archivos listos en /dist'
-        // Aquí podrías subir los archivos a un servidor si quieres
-      }
-    }
-  }
 }
