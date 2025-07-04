@@ -1,0 +1,22 @@
+@startuml branching_flow
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+
+' Definición de nodos
+card "feature/Rama-1" as rama1 #FFCCCC
+card "feature/Rama3" as rama3 #CCFFCC
+card "feature/ramap" as ramap #CCCCFF
+card "main" as main #FFFFCC
+
+' Conexiones
+rama1 --> ramap : "merge"
+rama3 --> ramap : "merge"
+ramap --> main : "merge"
+
+' Etiqueta de versión
+note right of main
+  <b>v2.0</b>
+end note
+
+@enduml
