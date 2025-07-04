@@ -1,8 +1,9 @@
+
 pipeline {
     agent any
     
     tools {
-        nodejs 'NodeJS' // Configurar en Jenkins Global Tool Configuration
+        nodejs 'NodeJS'
     }
     
     stages {
@@ -26,7 +27,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                sh 'npm test -- --coverage --watchAll=false'
+                sh 'npm test -- --coverage --run'
             }
         }
     }
